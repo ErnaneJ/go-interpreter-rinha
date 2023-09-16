@@ -41,7 +41,7 @@ cargo install rinha
 After installing `rinha`, you can tokenize a Rinha source file to JSON like this:
 
 ```bash
-rinha ./var/rinha/files/print.rinha > ./var/rinha/files/print.rinha.json
+rinha ./var/rinha/files/<FILE_NAME>.rinha > ./var/rinha/files/<FILE_NAME>.rinha.json
 ```
 
 You can then use the generated JSON file as needed.
