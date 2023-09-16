@@ -1,0 +1,1 @@
+# Go interpreter for rinha
