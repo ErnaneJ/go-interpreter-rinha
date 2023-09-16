@@ -1,46 +1,75 @@
-# Go interpreter for rinha
+# Go Interpreter for Rinha
 
-## Runnind with go CLI
+This project is a Go interpreter for the Rinha programming language.
+
+## Running with the Go CLI
+
+You can run the interpreter using the Go command-line interface (CLI):
 
 ```bash
 go run main.go
 ```
 
-## Running with docker image
+## Running with a Docker Image
 
-Build a docker image from project
+You can also run the interpreter using a Docker image. First, build a Docker image from the project:
+
 ```bash
 docker build -t go-interpreter-rinha:1.0 .
 ```
-And execute it 
+
+Then, execute the Docker container:
 
 ```bash
 docker run -dp 3000:3000 go-interpreter-rinha:1.0
-
-# Or
-
-docker run -it --rm go-interpreter-rinha:1.0 # with this instructions you can see outputs from execution
 ```
 
-## Tokenize source.rinha to source.rinha.json
+Alternatively, if you want to see the outputs from the execution:
 
 ```bash
-# install rust
-# cargo install rinha
-# run rinha ./var/rinha/files/print.rinha > ./var/rinha/files/print.rinha.json for exemple
-
-# use the json file
+docker run -it --rm go-interpreter-rinha:1.0
 ```
 
-## Execute
+## Tokenizing Source Files
+
+You can tokenize a Rinha source file into a JSON file using the `rinha` tool. First, make sure you have Rust installed. Then, install the `rinha` tool:
 
 ```bash
-go run main.go
+cargo install rinha
+```
 
-# or
+After installing `rinha`, you can tokenize a Rinha source file to JSON like this:
 
-bin/run file_name # ex: bin/run print for /var/rinha/files/print.rinha
+```bash
+rinha ./var/rinha/files/print.rinha > ./var/rinha/files/print.rinha.json
+```
 
-# bin/run file need permissions to run. For this, execute
+You can then use the generated JSON file as needed.
+
+## Execution
+
+To execute a Rinha program, use the following commands:
+
+```bash
+go run main.go file_name
+```
+
+or
+
+```bash
+bin/run file_name
+```
+
+For example:
+
+```bash
+bin/run print
+```
+
+The `bin/run` script needs execution permissions. You can grant the necessary permissions by running:
+
+```bash
 chmod +x bin/run
 ```
+
+Note: `file_name` represents a file present in the `/var/rinha/files` folder and corresponds to a file without an extension.
