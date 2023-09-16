@@ -16,7 +16,8 @@ func Interpret(astExpression interface{}) interface{} {
 		return nil
 	case "Str":
 		return getNode(astExpression, "value").(string)
-
+	case "Int":
+		return getNode(astExpression, "value").(float64)
 	default:
 		fmt.Printf("Unknown node kind: <%s>", kind)
 	}
