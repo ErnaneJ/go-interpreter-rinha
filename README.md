@@ -2,6 +2,8 @@
 
 This project is a Go interpreter for the Rinha programming language.
 
+This is a project for [Rinha de compiler](https://github.com/aripiprazole/rinha-de-compiler).
+
 ## Running with the Go CLI
 
 You can run the interpreter using the Go command-line interface (CLI):
