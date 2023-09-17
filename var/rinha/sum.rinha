@@ -1,0 +1,8 @@
+let sum = fn (a, b) => {
+  a + b
+};
+
+let x = 2;
+let y = 5;
+
+print("The result of the sum between "+x+" and "+y+" is "+sum(x, y))

@@ -1,17 +1,11 @@
 package main
 
 import (
-	"os"
-
 	Executor "github.com/ernanej/go-interpreter-rinha/v1/src/executor"
 	Interpreter "github.com/ernanej/go-interpreter-rinha/v1/src/interpreter"
 )
 
 func main() {
-	if len(os.Args) < 2 {
-		panic("To execute the desired program prediction. for example: 'go run print' to interpret the file './var/rinha/print.rinha.json'")
-	}
-
 	astExpression, err := Executor.Execute("./var/rinha/source.rinha.json")
 
 	if err != nil {

@@ -6,7 +6,6 @@ import (
 )
 
 func getNode(ast interface{}, key string) interface{} {
-	fmt.Println(ast.(map[string]interface{})[key])
 	return ast.(map[string]interface{})[key]
 }
 
@@ -21,12 +20,19 @@ func copyEnvironment(environment map[string]interface{}) map[string]interface{} 
 func Execute(ast interface{}, environment map[string]interface{}) interface{} {
 	switch kind := getNode(ast, "kind"); kind {
 	case PRINT:
-		term := Execute(getNode(ast, "value"), environment)
-		fmt.Println(term)
+		value := getNode(ast, "value")
+		if getNode(value, "kind") == nil {
+			term := Execute(value, environment)
+			fmt.Println(term)
+		} else {
+			tuple := Execute(value, environment)
+			first := Execute(getNode(tuple, "first"), environment)
+			second := Execute(getNode(tuple, "second"), environment)
+
+			fmt.Println("(", first, ", ", second, ")")
+		}
 		return nil
-	case STR:
-		return getNode(ast, "value")
-	case INT:
+	case STR, BOOL, INT:
 		return getNode(ast, "value")
 	case BINARY:
 		lhs := Execute(getNode(ast, "lhs"), environment)
@@ -85,38 +91,53 @@ func Execute(ast interface{}, environment map[string]interface{}) interface{} {
 		default:
 			panic(fmt.Sprintf("Unknown operator: <%s>", op))
 		}
-	case BOOL:
-		return getNode(ast, "value").(bool)
 	case LET:
-		copy_environment := copyEnvironment(environment)
+		new_environment := copyEnvironment(environment)
 
 		name := getNode(getNode(ast, "name"), "text").(string)
-		value := Execute(getNode(ast, "value"), copy_environment)
+		value := Execute(getNode(ast, "value"), environment)
 
-		copy_environment[name] = value
+		new_environment[name] = value
 
-		return Execute(getNode(ast, "next"), copy_environment)
+		return Execute(getNode(ast, "next"), new_environment)
 	case VAR:
 		name := getNode(ast, "text").(string)
 		if value, ok := environment[name]; ok {
-			return value
+			if _, ok := value.(map[string]interface{}); ok {
+				return Execute(value, environment)
+			} else {
+				return value
+			}
 		} else {
 			panic(fmt.Sprintf("Undefined variable: <%s>", name))
 		}
 	case CALL:
-		copy_environment := copyEnvironment(environment)
-
 		callee := Execute(getNode(ast, "callee"), environment)
+
+		if getNode(callee, "kind") != FUNCTION {
+			return nil
+		}
+
 		arguments := getNode(ast, "arguments").([]interface{})
 		params := getNode(callee, "parameters").([]interface{})
 
 		for i := 0; i < len(arguments); i++ {
-			arguments[i] = Execute(arguments[i], environment)
+			if _, ok := arguments[i].(map[string]interface{}); ok {
+				if getNode(arguments[i], "kind") == nil {
+					arguments[i] = getNode(arguments[i], "value")
+				} else {
+					arguments[i] = Execute(arguments[i], environment)
+				}
+			}
 		}
 
 		for i := 0; i < len(params); i++ {
 			if _, ok := params[i].(map[string]interface{}); ok {
-				params[i] = getNode(params[i], "text")
+				if getNode(params[i], "kind") == nil {
+					params[i] = getNode(params[i], "text")
+				} else {
+					params[i] = Execute(params[i], environment)
+				}
 			}
 		}
 
@@ -124,12 +145,13 @@ func Execute(ast interface{}, environment map[string]interface{}) interface{} {
 			panic(fmt.Sprintf("Expected %d arguments, but got %d", len(params), len(arguments)))
 		}
 
+		new_environment := copyEnvironment(environment)
+
 		for i := 0; i < len(params); i++ {
-			copy_environment[params[i].(string)] = arguments[i]
+			new_environment[params[i].(string)] = arguments[i]
 		}
 
-		return Execute(getNode(callee, "value"), copy_environment)
-
+		return Execute(getNode(callee, "value"), new_environment)
 	case FUNCTION:
 		return ast
 	case IF:
@@ -140,6 +162,22 @@ func Execute(ast interface{}, environment map[string]interface{}) interface{} {
 		} else {
 			else_ := getNode(ast, "otherwise")
 			return Execute(else_, environment)
+		}
+	case TUPLE:
+		return ast
+	case FIRST:
+		top := getNode(ast, "value")
+		if _, ok := top.(map[string]interface{}); ok {
+			return Execute(getNode(Execute(top, environment), "first"), environment)
+		} else {
+			return Execute(getNode(top, "first"), environment)
+		}
+	case SECOND:
+		top := getNode(ast, "value")
+		if _, ok := top.(map[string]interface{}); ok {
+			return Execute(getNode(Execute(top, environment), "second"), environment)
+		} else {
+			return Execute(getNode(top, "second"), environment)
 		}
 	default:
 		panic(fmt.Sprintf("Unknown node kind: <%s>", kind))
