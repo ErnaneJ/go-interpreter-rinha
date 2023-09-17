@@ -25,7 +25,6 @@ func Execute(astExpression interface{}, environment map[string]interface{}) inte
 		value := Execute(getNode(astExpression, "value"), environment)
 		environment[name] = value
 		Execute(getNode(astExpression, "next"), environment)
-
 	case VAR:
 		name := getNode(astExpression, "text").(string)
 		if value, ok := environment[name]; ok {

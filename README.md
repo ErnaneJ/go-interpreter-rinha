@@ -80,15 +80,15 @@ Note: `file_name` represents a file present in the `/var/rinha/files` folder and
 
 - [x] Int
 - [x] Str
-- [ ] Call
+- [x] Call
 - [ ] Binary
 - [ ] Function
-- [ ] Let
-- [ ] If
+- [x] Let
+- [x] If
 - [x] Print
 - [ ] First
 - [ ] Second
 - [ ] Bool
 - [ ] Tuple
-- [ ] Var
+- [x] Var
 - [x] Parameter
