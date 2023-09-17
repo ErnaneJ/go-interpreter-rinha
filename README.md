@@ -75,3 +75,20 @@ chmod +x bin/run
 ```
 
 Note: `file_name` represents a file present in the `/var/rinha/files` folder and corresponds to a file without an extension.
+
+## TODO
+
+- [x] Int
+- [x] Str
+- [ ] Call
+- [ ] Binary
+- [ ] Function
+- [ ] Let
+- [ ] If
+- [x] Print
+- [ ] First
+- [ ] Second
+- [ ] Bool
+- [ ] Tuple
+- [ ] Var
+- [x] Parameter

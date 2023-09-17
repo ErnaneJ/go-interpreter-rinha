@@ -1,0 +1,2 @@
+let nome = "Ernane";
+print("Meu nome é"+nome)

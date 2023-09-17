@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	executor "github.com/ernanej/go-interpreter-rinha/v1/src/executor"
-	interpreter "github.com/ernanej/go-interpreter-rinha/v1/src/interpreter"
+	Executor "github.com/ernanej/go-interpreter-rinha/v1/src/executor"
+	Interpreter "github.com/ernanej/go-interpreter-rinha/v1/src/interpreter"
 )
 
 func main() {
@@ -14,11 +14,12 @@ func main() {
 
 	fileName := os.Args[1]
 
-	astExpression, err := executor.Execute("./var/rinha/" + fileName + ".rinha.json")
+	astExpression, err := Executor.Execute("./var/rinha/" + fileName + ".rinha.json")
 
 	if err != nil {
 		panic(err)
 	}
 
-	interpreter.Interpret(astExpression)
+	environment := make(map[string]interface{})
+	Interpreter.Execute(astExpression, environment)
 }

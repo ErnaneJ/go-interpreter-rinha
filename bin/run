@@ -10,5 +10,3 @@ rinha ./var/rinha/"$1".rinha > ./var/rinha/"$1".rinha.json
 
 # Execute go run main.go -v
 go run main.go $1 
-
-echo

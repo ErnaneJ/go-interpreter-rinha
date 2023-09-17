@@ -1,0 +1,16 @@
+package src
+
+const INT = "Int"
+const STR = "Str"
+const CALL = "Call"
+const BINARY = "Binary"
+const FUNCTION = "Function"
+const LET = "Let"
+const IF = "If"
+const PRINT = "Print"
+const FIRST = "First"
+const SECOND = "Second"
+const BOOL = "Bool"
+const TUPLE = "Tuple"
+const VAR = "Var"
+const PARAMETER = "Parameter"
