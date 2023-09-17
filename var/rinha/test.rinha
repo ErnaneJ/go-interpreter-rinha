@@ -1,2 +1,10 @@
-let nome = "Ernane";
-print("Meu nome é"+nome)
+let sum = fn (n) => {
+  if (n==1){
+    print (n)
+  }else{
+    sum(n-1)
+  }
+};
+
+sum(2)
+

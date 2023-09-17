@@ -53,7 +53,7 @@ You can then use the generated JSON file as needed.
 To execute a Rinha program, use the following commands:
 
 ```bash
-go run main.go file_name
+go run main.go # run with ./var/rinha/source.rinha.json
 ```
 
 or
@@ -81,14 +81,13 @@ Note: `file_name` represents a file present in the `/var/rinha/files` folder and
 - [x] Int
 - [x] Str
 - [x] Call
-- [ ] Binary
-- [ ] Function
+- [x] Binary
+- [x] Function
 - [x] Let
 - [x] If
 - [x] Print
 - [ ] First
 - [ ] Second
-- [ ] Bool
+- [x] Bool
 - [ ] Tuple
 - [x] Var
-- [x] Parameter

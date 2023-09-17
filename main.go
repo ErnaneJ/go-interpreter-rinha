@@ -12,9 +12,7 @@ func main() {
 		panic("To execute the desired program prediction. for example: 'go run print' to interpret the file './var/rinha/print.rinha.json'")
 	}
 
-	fileName := os.Args[1]
-
-	astExpression, err := Executor.Execute("./var/rinha/" + fileName + ".rinha.json")
+	astExpression, err := Executor.Execute("./var/rinha/source.rinha.json")
 
 	if err != nil {
 		panic(err)

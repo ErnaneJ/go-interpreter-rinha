@@ -1,13 +1,9 @@
-let combination = fn (n, k) => {
-    let a = k == 0;
-    let b = k == n;
-    if (a || b)
-    {
-        1
-    }
-    else {
-        combination(n - 1, k - 1) + combination(n - 1, k)
-    }
+let fib = fn (n) => {
+  if (n < 2) {
+    n
+  } else {
+    fib(n - 1) + fib(n - 2)
+  }
 };
 
-print(combination(10, 2))
+print(fib(10))
